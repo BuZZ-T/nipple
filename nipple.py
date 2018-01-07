@@ -19,7 +19,6 @@ try:
 
     import pygame
     use_pygame = True
-    pygame.mixer.init()
     logger.info('use pygame for playing sound')
 except ImportError:
     try:
@@ -76,6 +75,9 @@ def on_release(key):
         shift_pressed = False
 
 def main():
+    if use_pygame:
+        pygame.mixer.init()
+        
     lis = keyboard.Listener(on_press=on_press, on_release=on_release)
     lis.start()
     lis.join()
