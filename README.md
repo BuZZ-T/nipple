@@ -77,4 +77,3 @@ This software is licensed under the GPL v3
 
 * Add support for other media types than just OGG Vorbis
 * Test pygame / playsound on Windows
-* Test pygame on MacOS
