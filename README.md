@@ -17,7 +17,7 @@ Install the necessary dependencies via *pip*:
 
 ##### Differences between sound libraries
 
-* **[playsound](https://github.com/TaylorSMarks/playsound)** is not able to stop the currently playing sound. So trying to start a sound file, while one is already playing, will queue it and play it after the currently playing sound has stopped. That also means that pressing a shortcut multiple times will play the sound multiple times.
+* **[playsound](https://github.com/TaylorSMarks/playsound)** is not able to stop the currently playing sound. So trying to start a sound file, while one is already playing, will queue it and play it after the currently playing sound has stopped. That also means that pressing a shortcut multiple times will play the sound multiple times. Playsound on macOS does not support playing *.ogg files, *.mp3 is used instead.
 * **[pygame](https://github.com/pygame/pygame)** is a library for 2D game development. So you install much more stuff than you actually need just for playing a sound file. But it is able to pause the currently playing sound on starting a new one. Also initializing pygame needs a notable cpu load in idle when `nipple.py` is running.
 
 So choose your weapon at your taste.
@@ -27,38 +27,47 @@ You can enforce using *playsound* when both *playsound* and *pygame* are install
 
 ## Usage
 
-Place your sound files in the same folder as `nipple.py` and name them `nipple<x>.ogg` or `nipple_s<x>.ogg`.
+Place your sound files in the same folder as `nipple.py` and name them `nipple_<x>.ogg` or `nipple_shift_<x>.ogg`. On macOS it would be `nipple_<x>.mp3` or `nipple_shift_<x>.mp3`
 The folder may look like this:
 ```
 ├── LICENSE.md
 ├── nipple.py
-├── nipple1.ogg
-├── nipple2.ogg
-├── nipple3.ogg
-├── nipple4.ogg
-├── nipple5.ogg
-├── nipple6.ogg
-├── nipple7.ogg
-├── nipple8.ogg
-├── nipple9.ogg
-├── nipple10.ogg
-├── nipple11.ogg
-├── nipple12.ogg
-├── nipple_s1.ogg
-├── nipple_s2.ogg
+├── nipple_f1.ogg
+├── nipple_f2.ogg
+├── nipple_f3.ogg
+├── nipple_f4.ogg
+├── nipple_f5.ogg
+├── nipple_f6.ogg
+├── nipple_f7.ogg
+├── nipple_f8.ogg
+├── nipple_f9.ogg
+├── nipple_f10.ogg
+├── nipple_f11.ogg
+├── nipple_f12.ogg
+├── nipple_shift_f1.ogg
+├── nipple_shift_f2.ogg
 ├── README.md
 ├── requirements-playsound.txt
 └── requirements-pygame.txt
 ```
 
+
 After starting just with `python nipple.py`, you can play a sound with **ctrl+f1** to **ctrl+f12** and **ctrl+shift+f1** to **ctrl+stift+f12**
 
-**ctrl+f1** will play `nipple1.ogg`, **ctrl+f2** will play `nipple2.ogg`, etc.
-**ctrl+shift+f1** will play `nipple_s1.ogg`, **ctrl+shift+f2** will play `nipple_s2.ogg`, etc.
-
+**ctrl+f1** will play `nipple_f1.ogg`, **ctrl+f2** will play `nipple_f2.ogg`, etc.
+**ctrl+shift+f1** will play `nipple_shift_f1.ogg`, **ctrl+shift+f2** will play `nipple_shift_f2.ogg`, etc.
 
 
 Be aware that the keyboard event propagation is not stopped when a sound is played. So **ctrl+f5** will reload your website, if your current window is a browser, because your browser will recognize that **f5** was pressed!
+
+### macOS 
+*(tested with 10.13.1 - High Sierra)*
+
+* MacOS restricts monitoring the keyboard for security reasons. Therefore you must run nipple as root. `sudo nipple.py`
+
+* Playing *.ogg files is not supported for playsound in macOS. When using nipple on a mac you must use ***.mp3**.
+
+* MacOS, as a default uses the F-Keys for special functions. Please note that you might need to change this default or also press the fn-key.
 
 ## License
 
@@ -67,4 +76,5 @@ This software is licensed under the GPL v3
 ## TODOs
 
 * Add support for other media types than just OGG Vorbis
-* Test on Windows and MacOS
+* Test pygame / playsound on Windows
+* Test pygame on MacOS
