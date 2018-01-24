@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import platform
 from pynput import keyboard
 import logging
 
@@ -12,6 +13,12 @@ shift_pressed = False
 current_sound_file = None
 
 force_playsound = len(os.sys.argv) > 1 and os.sys.argv[1] == '--playsound'
+
+# Define if nipple runs on a macOS system
+isMac = False
+if platform.system() == "Darwin":
+    isMac = True
+
 
 try:
     if force_playsound:
@@ -29,7 +36,7 @@ except ImportError:
         import os
         if force_playsound:
             print "install playsound, when forcing it, or use pygame"
-        else: 
+        else:
             print "install either pygame or playsound (e.g. via pip)"
         os.sys.exit(1)
 
@@ -77,7 +84,7 @@ def on_release(key):
 def main():
     if use_pygame:
         pygame.mixer.init()
-        
+
     lis = keyboard.Listener(on_press=on_press, on_release=on_release)
     lis.start()
     lis.join()
