@@ -2,6 +2,7 @@
 
 import os
 import platform
+# import os.path
 from pynput import keyboard
 import logging
 
@@ -42,21 +43,24 @@ except ImportError:
 
 
 def play(sound_file):
-    if use_pygame:
-        try:
-            global current_sound_file
-            pygame.mixer.music.stop()
-            if not sound_file is current_sound_file:
-                current_sound_file = sound_file
-                pygame.mixer.music.load(sound_file)
-            pygame.mixer.music.play()
-        except pygame.error:
-            logger.debug('no file "%s" found' % sound_file)
+    if os.path.isfile(sound_file):
+        if use_pygame:
+            try:
+                global current_sound_file
+                pygame.mixer.music.stop()
+                if not sound_file is current_sound_file:
+                    current_sound_file = sound_file
+                    pygame.mixer.music.load(sound_file)
+                pygame.mixer.music.play()
+            except pygame.error:
+                logger.debug('no file "%s" found' % sound_file)
+        else:
+            try:
+                playsound(sound_file)
+            except PlaysoundException:
+                logger.debug('no file "%s" found' % sound_file)
     else:
-        try:
-            playsound(sound_file)
-        except PlaysoundException:
-            logger.debug('no file "%s" found' % sound_file)
+        logger.debug('no file "%s" found' % sound_file)
 
 
 def on_press(key):
@@ -68,9 +72,15 @@ def on_press(key):
         shift_pressed = True
     elif str(key)[:5] == 'Key.f':
         if ctrl_pressed and shift_pressed:
-            play('nipple_shift_%s.ogg' % str(key)[4:])
+            if isMac:
+                play('nipple_shift_%s.mp3' % str(key)[4:])
+            else:
+                play('nipple_shift_%s.ogg' % str(key)[4:])
         elif ctrl_pressed:
-            play('nipple_%s.ogg' % str(key)[4:])
+            if isMac:
+                play('nipple_%s.mp3' % str(key)[4:])
+            else:
+                play('nipple_%s.ogg' % str(key)[4:])
 
 
 def on_release(key):
