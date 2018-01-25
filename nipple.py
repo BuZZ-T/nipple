@@ -2,7 +2,6 @@
 
 import os
 import platform
-# import os.path
 from pynput import keyboard
 import logging
 
@@ -16,9 +15,7 @@ current_sound_file = None
 force_playsound = len(os.sys.argv) > 1 and os.sys.argv[1] == '--playsound'
 
 # Define if nipple runs on a macOS system
-isMac = False
-if platform.system() == "Darwin":
-    isMac = True
+isMac = platform.system() == "Darwin"
 
 
 try:
@@ -43,6 +40,7 @@ except ImportError:
 
 
 def play(sound_file):
+    #needed to overcome a bug in the playsound macOS implementation
     if os.path.isfile(sound_file):
         if use_pygame:
             try:
