@@ -17,7 +17,6 @@ force_playsound = len(os.sys.argv) > 1 and os.sys.argv[1] == '--playsound'
 # Define if nipple runs on a macOS system
 isMac = platform.system() == "Darwin"
 
-
 try:
     if force_playsound:
         raise ImportError
@@ -40,8 +39,6 @@ except ImportError:
 
 
 def play(sound_file):
-    #needed to overcome a bug in the playsound macOS implementation
-    if os.path.isfile(sound_file):
         if use_pygame:
             try:
                 global current_sound_file
@@ -55,11 +52,8 @@ def play(sound_file):
         else:
             try:
                 playsound(sound_file)
-            except PlaysoundException:
+            except (PlaysoundException, IOError):
                 logger.debug('no file "%s" found' % sound_file)
-    else:
-        logger.debug('no file "%s" found' % sound_file)
-
 
 def on_press(key):
     global ctrl_pressed
