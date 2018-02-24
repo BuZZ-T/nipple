@@ -17,7 +17,7 @@ Install the necessary dependencies via *pip*:
 
 ##### Differences between sound libraries
 
-* **[playsound](https://github.com/TaylorSMarks/playsound)** is not able to stop the currently playing sound. So trying to start a sound file, while one is already playing, will queue it and play it after the currently playing sound has stopped. That also means that pressing a shortcut multiple times will play the sound multiple times. Playsound on macOS does not support playing *.ogg files, *.mp3 is used instead.
+* **[playsound](https://github.com/TaylorSMarks/playsound)** is not able to stop the currently playing sound. So trying to start a sound file, while one is already playing, will queue it and play it after the currently playing sound has stopped. That also means that pressing a shortcut multiple times will play the sound multiple times. Playsound on macOS does not support playing *.ogg files.
 * **[pygame](https://github.com/pygame/pygame)** is a library for 2D game development. So you install much more stuff than you actually need just for playing a sound file. But it is able to pause the currently playing sound on starting a new one. Also initializing pygame needs a notable cpu load in idle when `nipple.py` is running.
 
 So choose your weapon at your taste.
@@ -27,7 +27,16 @@ You can enforce using *playsound* when both *playsound* and *pygame* are install
 
 ## Usage
 
-Place your sound files in the same folder as `nipple.py` and name them `nipple_<x>.ogg` or `nipple_shift_<x>.ogg`. On macOS it would be `nipple_<x>.mp3` or `nipple_shift_<x>.mp3`
+Place your sound files in the same folder as `nipple.py` and name them `nipple_<fn_key>.<extension>` or `nipple_shift_<fn_key>.<extension>`.
+
+`<fn_key>` can be a function key from *F1* to *F12*.
+
+Currently supported file extensions are:
+
+* .mp3
+* .ogg (not on macOS, as playsound does not support it)
+* wav
+
 The folder may look like this:
 ```
 ├── LICENSE.md
@@ -54,8 +63,11 @@ The folder may look like this:
 
 After starting just with `python nipple.py`, you can play a sound with **ctrl+f1** to **ctrl+f12** and **ctrl+shift+f1** to **ctrl+stift+f12**
 
-**ctrl+f1** will play `nipple_f1.ogg`, **ctrl+f2** will play `nipple_f2.ogg`, etc.
-**ctrl+shift+f1** will play `nipple_shift_f1.ogg`, **ctrl+shift+f2** will play `nipple_shift_f2.ogg`, etc.
+**ctrl+f1** will play `nipple_f1.<extension>`, **ctrl+f2** will play `nipple_f2.<extension>`, etc.
+**ctrl+shift+f1** will play `nipple_shift_f1.<extension>`, **ctrl+shift+f2** will play `nipple_shift_f2.<extension>`, etc.
+
+**BE AWARE:**
+** When placing multiple files with the same function key, `os.listdir` decides which of them is chosen. No error or warning will be placed in this case!**
 
 
 Be aware that the keyboard event propagation is not stopped when a sound is played. So **ctrl+f5** will reload your website, if your current window is a browser, because your browser will recognize that **f5** was pressed!

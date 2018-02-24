@@ -1,2 +1,10 @@
 nipple*.ogg
+nipple*.mp3
+nipple*.wav
+
+# virtualenv
 venv/
+
+# used to create a list of existing sound files
+nipple.txt
+
