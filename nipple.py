@@ -80,6 +80,8 @@ def on_press(key):
                 sound_file = ALL_MODIFIER_AUDIO_FILES[int(str(key)[5:])]
             elif ctrl_pressed:
                 sound_file = ALL_AUDIO_FILES[int(str(key)[5:])]
+            else:
+                sound_file = None
 
             if sound_file:
                 play(sound_file)
@@ -118,9 +120,6 @@ def main():
                     insert_with_default('nipple_shift_f%s.ogg', ALL_MODIFIER_AUDIO_FILES, int(key), file_)
                 else:
                     insert_with_default('nipple_f%s.ogg', ALL_AUDIO_FILES, int(key), file_)
-
-    print("mod: %s" % ', '.join(['None' if item is None else item for item in ALL_MODIFIER_AUDIO_FILES]))
-    print("normal: %s" % ', '.join(['None' if item is None else item for item in ALL_AUDIO_FILES]))
 
     if use_pygame:
         pygame.mixer.init()
