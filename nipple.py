@@ -15,8 +15,9 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('nipple')
 
 # config
-AUDIO_EXTENSIONS = ['ogg', 'mp3', 'wav']
+AUDIO_EXTENSIONS = ['ogg', 'mp3', 'wav', 'opus']
 AUDIO_MAC_EXTENSIONS = [extension for extension in AUDIO_EXTENSIONS if extension != 'ogg']
+# AUDIO_PYGAME_EXTENSIONS 
 AUDIO_FOLDER = '.'
 
 ALL_AUDIO_FILES = []

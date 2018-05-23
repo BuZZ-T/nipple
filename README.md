@@ -36,6 +36,9 @@ Currently supported file extensions are:
 * .mp3
 * .ogg (not on macOS, as playsound does not support it)
 * wav
+* opus (not when using pygame, as it does not support it)
+
+Not supported audio formats are filtered and not added to the internal audio file list!
 
 The folder may look like this:
 ```
@@ -54,7 +57,7 @@ The folder may look like this:
 ├── nipple_f11.ogg
 ├── nipple_f12.ogg
 ├── nipple_shift_f1.ogg
-├── nipple_shift_f2.ogg
+├── nipple_shift_f2.opus
 ├── README.md
 ├── requirements-playsound.txt
 └── requirements-pygame.txt
@@ -73,6 +76,12 @@ After starting just with `python nipple.py`, you can play a sound with **ctrl+f1
 
 Be aware that the keyboard event propagation is not stopped when a sound is played. So **ctrl+f5** will reload your website, if your current window is a browser, because your browser will recognize that **f5** was pressed!
 
+## Audio format support
+
+### pygame
+
+*pygame* has no support for opus at the moment. So use *playsound* for opus files or convert them to a supported audio format. (only tested on linux...)
+
 ### macOS 
 *(tested with 10.13.1 - High Sierra)*
 
@@ -86,5 +95,6 @@ This software is licensed under the GPL v3
 
 ## TODOs
 
-* Add support for other media types than just OGG Vorbis
+* Check support for opus files, currently only Linux is tested!
 * Test pygame / playsound on Windows
+* Add (cross-platform) `pyinotify` to update the internal audio file list when audio files are added without the need to restart `nipple.py`.
