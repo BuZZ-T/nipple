@@ -7,6 +7,9 @@ import platform
 from pynput import keyboard
 import logging
 import re
+import signal
+import sys
+from threading import Thread
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('nipple')
@@ -108,6 +111,16 @@ def insert_with_default(default, array, index, item):
     array[index] = item
 
 
+def signal_handler(signal, frame):
+    sys.exit(0)
+
+
+def keyboard_listener():
+    lis = keyboard.Listener(on_press=on_press, on_release=on_release)
+    lis.start()
+    lis.join()
+
+
 def main():
     extensions = AUDIO_MAC_EXTENSIONS if isMac else AUDIO_EXTENSIONS
 
@@ -124,9 +137,15 @@ def main():
     if use_pygame:
         pygame.mixer.init()
 
-    lis = keyboard.Listener(on_press=on_press, on_release=on_release)
-    lis.start()
-    lis.join()
+    # start blocking thread for keyboard listener
+    t = Thread(target=keyboard_listener)
+    t.setDaemon(True)
+    t.start()
+
+    # block main thread for signal handling
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.pause()
+
 
 if __name__ == '__main__':
     main()
